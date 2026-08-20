@@ -1,0 +1,14 @@
+{
+  "name": "Cavaliere Electric — Proposals",
+  "short_name": "CE Proposals",
+  "description": "Proposal Generator for Cavaliere Electric & Sons",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1f33",
+  "theme_color": "#1a3a5c",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
