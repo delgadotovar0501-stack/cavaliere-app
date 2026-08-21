@@ -39,6 +39,21 @@ header img{height:30px}
 .h-title{font-size:15px;font-weight:700;color:#fff}
 .h-sub{font-size:11px;color:#f5c300}
 main{padding:1rem;max-width:480px;margin:0 auto;padding-bottom:4rem}
+
+/* Photo scan card */
+.scan-card{background:#1a1a1a;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;border:2px dashed #f5c300;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s}
+.scan-card:active{background:#222;transform:scale(0.98)}
+.scan-icon{font-size:28px;flex-shrink:0}
+.scan-text{flex:1}
+.scan-title{font-size:14px;font-weight:600;color:#fff}
+.scan-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px}
+#scanStatus{font-size:12px;color:#f5c300;margin-top:4px;min-height:16px}
+#photoInput{display:none}
+
+.divider{display:flex;align-items:center;gap:8px;margin:4px 0 12px}
+.divider span{font-size:12px;color:#aaa}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:#ddd}
+
 .tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
 .tpl-btn{background:#1a1a1a;color:#fff;border:2px solid #f5c300;border-radius:11px;padding:16px 8px;font-size:14px;font-weight:600;cursor:pointer;text-align:center;line-height:1.4;transition:all 0.15s}
 .tpl-btn:active{background:#f5c300;color:#1a1a1a;transform:scale(0.96)}
@@ -50,13 +65,9 @@ main{padding:1rem;max-width:480px;margin:0 auto;padding-bottom:4rem}
 .f input{width:100%;font-size:15px;font-family:inherit;border:1.5px solid #ddd;border-radius:8px;padding:9px 12px;color:#1a1a1a;background:#fafafa;outline:none;-webkit-appearance:none;transition:border-color 0.15s}
 .f input:focus{border-color:#f5c300;background:#fff}
 .r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
-/* Scope header */
 .scope-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
 .scope-controls{display:flex;align-items:center;gap:8px}
-
-/* Price mode toggle */
-.toggle-wrap{display:flex;align-items:center;gap:6px;font-size:12px;color:#666}
+.toggle-wrap{display:flex;align-items:center;gap:6px}
 .toggle{position:relative;width:44px;height:24px;cursor:pointer}
 .toggle input{opacity:0;width:0;height:0}
 .slider{position:absolute;inset:0;background:#ddd;border-radius:12px;transition:0.3s}
@@ -64,14 +75,11 @@ main{padding:1rem;max-width:480px;margin:0 auto;padding-bottom:4rem}
 .toggle input:checked + .slider{background:#f5c300}
 .toggle input:checked + .slider::before{transform:translateX(20px)}
 .toggle-lbl{font-size:11px;font-weight:600;color:#888}
-
-/* Mic btn */
 .mic-btn{display:flex;align-items:center;gap:5px;background:#1a1a1a;color:#f5c300;border:1.5px solid #f5c300;border-radius:20px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer}
 .mic-btn.recording{background:#e53e3e;color:#fff;border-color:#e53e3e;animation:micPulse 1s ease infinite}
 @keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(229,62,62,0.4)}50%{box-shadow:0 0 0 8px rgba(229,62,62,0)}}
 .mic-status{font-size:11px;color:#888;margin-bottom:8px;min-height:16px;font-style:italic}
 .mic-status.listening{color:#e53e3e;font-weight:600}
-
 .items{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
 .item-row{display:flex;gap:8px;align-items:center}
 .item-desc{flex:1;font-size:14px;font-family:inherit;border:1.5px solid #ddd;border-radius:8px;padding:9px 12px;color:#1a1a1a;background:#fafafa;outline:none;-webkit-appearance:none}
@@ -80,19 +88,14 @@ main{padding:1rem;max-width:480px;margin:0 auto;padding-bottom:4rem}
 .item-price:focus{border-color:#f5c300;background:#fff}
 .item-del{background:none;border:none;cursor:pointer;color:#bbb;font-size:22px;line-height:1;padding:4px;flex-shrink:0}
 .add-item{width:100%;padding:10px;font-size:13px;color:#666;background:none;border:1.5px dashed #ccc;border-radius:8px;cursor:pointer}
-
-/* Total row */
 .total-row{display:flex;justify-content:space-between;align-items:center;padding-top:10px;margin-top:8px;border-top:1.5px solid #eee}
 .total-lbl{font-size:13px;color:#888;font-weight:500}
 .total-val{font-size:22px;font-weight:700;color:#1a1a1a}
-
-/* Manual total input */
 .manual-total{display:none;margin-top:10px;padding-top:10px;border-top:1.5px solid #eee}
 .manual-total.show{display:block}
 .manual-total label{font-size:12px;color:#555;font-weight:600;display:block;margin-bottom:4px}
 .manual-total input{width:100%;font-size:20px;font-family:inherit;border:2px solid #f5c300;border-radius:8px;padding:10px 12px;color:#1a1a1a;background:#fffbea;outline:none;font-weight:700;-webkit-appearance:none}
-
-.gen-btn{width:100%;padding:16px;background:#f5c300;color:#1a1a1a;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px;-webkit-appearance:none;letter-spacing:0.02em;box-shadow:0 4px 12px rgba(245,195,0,0.3)}
+.gen-btn{width:100%;padding:16px;background:#f5c300;color:#1a1a1a;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px;-webkit-appearance:none;box-shadow:0 4px 12px rgba(245,195,0,0.3)}
 .gen-btn:active{background:#e0b000;transform:scale(0.99)}
 .gen-btn:disabled{opacity:0.6}
 .err{color:#c00;font-size:13px;margin-top:8px;display:none}
@@ -151,11 +154,26 @@ main{padding:1rem;max-width:480px;margin:0 auto;padding-bottom:4rem}
     </div>
   </header>
   <main>
-    <div class="lbl" style="margin-top:4px">Quick start</div>
+
+    <!-- Photo scan -->
+    <div class="scan-card" onclick="document.getElementById('photoInput').click()">
+      <div class="scan-icon">📷</div>
+      <div class="scan-text">
+        <div class="scan-title">Scan client from photo</div>
+        <div class="scan-sub">Take a photo of the HCP screen</div>
+        <div id="scanStatus"></div>
+      </div>
+    </div>
+    <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="scanPhoto(this)">
+
+    <div class="divider"><span>or fill manually</span></div>
+
+    <div class="lbl">Quick start</div>
     <div class="tpl-grid">
       <button class="tpl-btn" onclick="loadTpl('general')"><span class="ico">📋</span>General Job</button>
       <button class="tpl-btn" onclick="loadTpl('panel')"><span class="ico">⚡</span>Panel Change</button>
     </div>
+
     <div class="card">
       <div class="lbl">Client info</div>
       <div class="f"><label>Client name</label><input id="clientName" placeholder="Don Pan"></div>
@@ -180,10 +198,7 @@ main{padding:1rem;max-width:480px;margin:0 auto;padding-bottom:4rem}
           </button>
           <div class="toggle-wrap">
             <span class="toggle-lbl">Per item</span>
-            <label class="toggle">
-              <input type="checkbox" id="priceToggle" onchange="togglePriceMode()">
-              <span class="slider"></span>
-            </label>
+            <label class="toggle"><input type="checkbox" id="priceToggle" onchange="togglePriceMode()"><span class="slider"></span></label>
             <span class="toggle-lbl">Total</span>
           </div>
         </div>
@@ -191,17 +206,13 @@ main{padding:1rem;max-width:480px;margin:0 auto;padding-bottom:4rem}
       <div class="mic-status" id="micStatus"></div>
       <div class="items" id="items"></div>
       <button class="add-item" onclick="addItem()">+ Add line item</button>
-
-      <!-- Per item total (auto) -->
       <div class="total-row" id="autoTotalRow">
         <span class="total-lbl">Total</span>
         <span class="total-val" id="totalDisplay">$0.00</span>
       </div>
-
-      <!-- Manual total input -->
       <div class="manual-total" id="manualTotalRow">
         <label>Total cost of job</label>
-        <input type="number" id="manualTotal" placeholder="0.00" oninput="updateManualTotal()">
+        <input type="number" id="manualTotal" placeholder="0.00">
       </div>
     </div>
 
@@ -225,93 +236,41 @@ function loadTpl(t){items=tpls[t].map((it,i)=>({id:Date.now()+i,...it}));render(
 function addItem(d,p){items.push({id:Date.now(),desc:d||"",price:p||""});render();}
 function removeItem(id){items=items.filter(i=>i.id!==id);render();}
 function updateItem(id,f,v){const it=items.find(i=>i.id===id);if(it)it[f]=v;updateTotal();}
+function updateTotal(){const t=items.reduce((s,i)=>s+(parseFloat(i.price)||0),0);document.getElementById("totalDisplay").textContent="$"+t.toLocaleString("en-US",{minimumFractionDigits:2});}
+function togglePriceMode(){manualTotalMode=document.getElementById("priceToggle").checked;document.querySelectorAll(".item-price").forEach(el=>el.style.display=manualTotalMode?"none":"");document.getElementById("autoTotalRow").style.display=manualTotalMode?"none":"flex";document.getElementById("manualTotalRow").classList.toggle("show",manualTotalMode);}
+function getTotal(){if(manualTotalMode)return parseFloat(document.getElementById("manualTotal").value)||0;return items.reduce((s,i)=>s+(parseFloat(i.price)||0),0);}
+function render(){document.getElementById("items").innerHTML=items.map(it=>`<div class="item-row"><input class="item-desc" placeholder="Description" value="${it.desc.replace(/"/g,"&quot;")}" oninput="updateItem(${it.id},'desc',this.value)"><input class="item-price" type="number" placeholder="$" value="${it.price}" oninput="updateItem(${it.id},'price',this.value)" style="display:${manualTotalMode?'none':''}"><button class="item-del" onclick="removeItem(${it.id})">x</button></div>`).join("");updateTotal();}
 
-function updateTotal(){
-  const t=items.reduce((s,i)=>s+(parseFloat(i.price)||0),0);
-  document.getElementById("totalDisplay").textContent="$"+t.toLocaleString("en-US",{minimumFractionDigits:2});
+async function scanPhoto(input){
+  const file=input.files[0];if(!file)return;
+  const status=document.getElementById("scanStatus");
+  status.textContent="📡 Reading...";
+  const reader=new FileReader();
+  reader.onload=async(e)=>{
+    const base64=e.target.result.split(",")[1];
+    const mime=file.type||"image/jpeg";
+    try{
+      const res=await fetch("/.netlify/functions/extract",{
+        method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({imageBase64:base64,mimeType:mime})
+      });
+      const p=await res.json();
+      if(p.error)throw new Error(p.error);
+      if(p.clientName)document.getElementById("clientName").value=p.clientName;
+      if(p.clientPhone)document.getElementById("clientPhone").value=p.clientPhone;
+      if(p.clientEmail)document.getElementById("clientEmail").value=p.clientEmail;
+      if(p.jobAddress)document.getElementById("jobAddress").value=p.jobAddress;
+      if(p.estimateRef)document.getElementById("estimateRef").value=p.estimateRef;
+      status.textContent="✅ Done — review fields";
+    }catch(e){status.textContent="⚠️ Could not read — fill manually";}
+  };
+  reader.readAsDataURL(file);input.value="";
 }
 
-function updateManualTotal(){
-  const v=parseFloat(document.getElementById("manualTotal").value)||0;
-  // just show formatted hint
-}
-
-function togglePriceMode(){
-  manualTotalMode=document.getElementById("priceToggle").checked;
-  // Show/hide price inputs
-  document.querySelectorAll(".item-price").forEach(el=>el.style.display=manualTotalMode?"none":"");
-  document.getElementById("autoTotalRow").style.display=manualTotalMode?"none":"flex";
-  document.getElementById("manualTotalRow").classList.toggle("show",manualTotalMode);
-}
-
-function getTotal(){
-  if(manualTotalMode){
-    return parseFloat(document.getElementById("manualTotal").value)||0;
-  }
-  return items.reduce((s,i)=>s+(parseFloat(i.price)||0),0);
-}
-
-function render(){
-  document.getElementById("items").innerHTML=items.map(it=>`
-    <div class="item-row">
-      <input class="item-desc" placeholder="Description" value="${it.desc.replace(/"/g,"&quot;")}" oninput="updateItem(${it.id},'desc',this.value)">
-      <input class="item-price" type="number" placeholder="$" value="${it.price}" oninput="updateItem(${it.id},'price',this.value)" style="display:${manualTotalMode?'none':''}">
-      <button class="item-del" onclick="removeItem(${it.id})">x</button>
-    </div>`).join("");
-  updateTotal();
-}
-
-function toggleMic(){
-  if(!("webkitSpeechRecognition"in window)&&!("SpeechRecognition"in window)){document.getElementById("micStatus").textContent="Use Chrome for voice";return;}
-  if(isListening){recognition.stop();return;}
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  recognition=new SR();recognition.continuous=true;recognition.interimResults=true;recognition.lang="en-US";
-  let finalText="";
-  recognition.onstart=()=>{isListening=true;document.getElementById("micBtn").classList.add("recording");document.getElementById("micIcon").textContent="⏹";document.getElementById("micLabel").textContent="Stop";document.getElementById("micStatus").textContent="Listening...";document.getElementById("micStatus").className="mic-status listening";};
-  recognition.onresult=(e)=>{finalText="";let interim="";for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)finalText+=e.results[i][0].transcript+" ";else interim+=e.results[i][0].transcript;}document.getElementById("micStatus").textContent=finalText+interim;};
-  recognition.onend=()=>{isListening=false;document.getElementById("micBtn").classList.remove("recording");document.getElementById("micIcon").textContent="🎙";document.getElementById("micLabel").textContent="Speak";if(finalText.trim())parseAndAddItems(finalText.trim());else{document.getElementById("micStatus").textContent="Nothing heard";document.getElementById("micStatus").className="mic-status";}};
-  recognition.onerror=(e)=>{isListening=false;document.getElementById("micBtn").classList.remove("recording");document.getElementById("micIcon").textContent="🎙";document.getElementById("micLabel").textContent="Speak";document.getElementById("micStatus").textContent="Error: "+e.error;document.getElementById("micStatus").className="mic-status";};
-  recognition.start();
-}
-
-function parseAndAddItems(text){
-  const pattern=/([a-z][a-z\s\-\/\(\)"'0-9,]+?)\s+(?:for\s+)?(?:\$)?(\d{3,6})(?:\s*dollars?)?(?=\s|$|,|\.)/gi;
-  const found=[];let match;
-  while((match=pattern.exec(text.toLowerCase()))!==null){
-    let desc=match[1].trim();
-    if(desc.length<4||/^\d+$/.test(desc)||/^(and|the|for|at|to|a|an|with|or)$/.test(desc))continue;
-    desc=desc.charAt(0).toUpperCase()+desc.slice(1);
-    found.push({desc,price:parseFloat(match[2])});
-  }
-  if(found.length>0){if(items.length===1&&!items[0].desc&&!items[0].price)items=[];found.forEach(it=>addItem(it.desc,it.price));document.getElementById("micStatus").textContent=`Added ${found.length} item${found.length>1?"s":""}`;
-  }else{if(items.length===1&&!items[0].desc&&!items[0].price)items=[];addItem(text.charAt(0).toUpperCase()+text.slice(1),"");document.getElementById("micStatus").textContent="Added — fill in price";}
-  document.getElementById("micStatus").className="mic-status";
-}
-
+function toggleMic(){if(!("webkitSpeechRecognition"in window)&&!("SpeechRecognition"in window)){document.getElementById("micStatus").textContent="Use Chrome for voice";return;}if(isListening){recognition.stop();return;}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;recognition=new SR();recognition.continuous=true;recognition.interimResults=true;recognition.lang="en-US";let finalText="";recognition.onstart=()=>{isListening=true;document.getElementById("micBtn").classList.add("recording");document.getElementById("micIcon").textContent="⏹";document.getElementById("micLabel").textContent="Stop";document.getElementById("micStatus").textContent="Listening...";document.getElementById("micStatus").className="mic-status listening";};recognition.onresult=(e)=>{finalText="";let interim="";for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)finalText+=e.results[i][0].transcript+" ";else interim+=e.results[i][0].transcript;}document.getElementById("micStatus").textContent=finalText+interim;};recognition.onend=()=>{isListening=false;document.getElementById("micBtn").classList.remove("recording");document.getElementById("micIcon").textContent="🎙";document.getElementById("micLabel").textContent="Speak";if(finalText.trim())parseAndAddItems(finalText.trim());else{document.getElementById("micStatus").textContent="Nothing heard";document.getElementById("micStatus").className="mic-status";}};recognition.onerror=(e)=>{isListening=false;document.getElementById("micBtn").classList.remove("recording");document.getElementById("micIcon").textContent="🎙";document.getElementById("micLabel").textContent="Speak";document.getElementById("micStatus").textContent="Error: "+e.error;document.getElementById("micStatus").className="mic-status";};recognition.start();}
+function parseAndAddItems(text){const pattern=/([a-z][a-z\s\-\/\(\)"'0-9,]+?)\s+(?:for\s+)?(?:\$)?(\d{3,6})(?:\s*dollars?)?(?=\s|$|,|\.)/gi;const found=[];let match;while((match=pattern.exec(text.toLowerCase()))!==null){let desc=match[1].trim();if(desc.length<4||/^\d+$/.test(desc)||/^(and|the|for|at|to|a|an|with|or)$/.test(desc))continue;desc=desc.charAt(0).toUpperCase()+desc.slice(1);found.push({desc,price:parseFloat(match[2])});}if(found.length>0){if(items.length===1&&!items[0].desc&&!items[0].price)items=[];found.forEach(it=>addItem(it.desc,it.price));document.getElementById("micStatus").textContent=`Added ${found.length} item${found.length>1?"s":""}"`;}else{if(items.length===1&&!items[0].desc&&!items[0].price)items=[];addItem(text.charAt(0).toUpperCase()+text.slice(1),"");document.getElementById("micStatus").textContent="Added — fill in price";}document.getElementById("micStatus").className="mic-status";}
 function formatDate(v){if(!v)return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});return new Date(v+"T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});}
-
-async function generate(){
-  const n=document.getElementById("clientName").value.trim();
-  const a=document.getElementById("jobAddress").value.trim();
-  const vi=items.filter(i=>i.desc.trim());
-  const e=document.getElementById("error");e.classList.remove("show");
-  if(!n||!a||!vi.length){e.textContent="Please fill in client name, job address, and at least one line item.";e.classList.add("show");return;}
-  const total=getTotal();
-  if(total<=0){e.textContent="Please enter a total cost.";e.classList.add("show");return;}
-  const btn=document.getElementById("genBtn");btn.disabled=true;btn.textContent="Generating...";
-  // In manual total mode, strip prices from items
-  const lineItems=manualTotalMode?vi.map(it=>({desc:it.desc,price:""})):vi;
-  try{
-    const res=await fetch("/.netlify/functions/generate",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({clientName:n,clientPhone:document.getElementById("clientPhone").value.trim(),clientEmail:document.getElementById("clientEmail").value.trim(),estimateRef:document.getElementById("estimateRef").value.trim(),jobAddress:a,date:formatDate(document.getElementById("date").value),lineItems,total,optional:document.getElementById("optional").value.trim()})
-    });
-    if(!res.ok)throw new Error("Server error: "+res.status);
-    const blob=await res.blob();const url=URL.createObjectURL(blob);
-    const a2=document.createElement("a");a2.href=url;a2.download=`Proposal_${n.replace(/\s+/g,"_")}.docx`;a2.click();URL.revokeObjectURL(url);
-  }catch(err){e.textContent="Error: "+err.message;e.classList.add("show");}
-  btn.disabled=false;btn.textContent="⬇ Generate & Download Proposal";
-}
-
+async function generate(){const n=document.getElementById("clientName").value.trim();const a=document.getElementById("jobAddress").value.trim();const vi=items.filter(i=>i.desc.trim());const e=document.getElementById("error");e.classList.remove("show");if(!n||!a||!vi.length){e.textContent="Please fill in client name, job address, and at least one line item.";e.classList.add("show");return;}const total=getTotal();if(total<=0){e.textContent="Please enter a total cost.";e.classList.add("show");return;}const btn=document.getElementById("genBtn");btn.disabled=true;btn.textContent="Generating...";const lineItems=manualTotalMode?vi.map(it=>({desc:it.desc,price:""})):vi;try{const res=await fetch("/.netlify/functions/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({clientName:n,clientPhone:document.getElementById("clientPhone").value.trim(),clientEmail:document.getElementById("clientEmail").value.trim(),estimateRef:document.getElementById("estimateRef").value.trim(),jobAddress:a,date:formatDate(document.getElementById("date").value),lineItems,total,optional:document.getElementById("optional").value.trim()})});if(!res.ok)throw new Error("Server error: "+res.status);const blob=await res.blob();const url=URL.createObjectURL(blob);const a2=document.createElement("a");a2.href=url;a2.download=`Proposal_${n.replace(/\s+/g,"_")}.docx`;a2.click();URL.revokeObjectURL(url);}catch(err){e.textContent="Error: "+err.message;e.classList.add("show");}btn.disabled=false;btn.textContent="⬇ Generate & Download Proposal";}
 document.getElementById("date").valueAsDate=new Date();
 addItem("","");
 </script>
