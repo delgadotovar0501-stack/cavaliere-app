@@ -10,10 +10,6 @@ exports.handler = async (event) => {
   try {
     const { imageBase64, mimeType } = JSON.parse(event.body);
 
-    if (!imageBase64) {
-      return { statusCode: 400, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'No image provided' }) };
-    }
-
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -24,38 +20,52 @@ exports.handler = async (event) => {
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
         max_tokens: 500,
-        system: 'Extract client contact info from this image. Respond ONLY with valid JSON, no markdown, no explanation:\n{"clientName":"","clientPhone":"","clientEmail":"","jobAddress":"","estimateRef":""}',
+        system: 'Extract client contact info from this image. Respond ONLY with valid JSON:\n{"clientName":"","clientPhone":"","clientEmail":"","jobAddress":"","estimateRef":""}',
         messages: [{
           role: 'user',
           content: [
-            { type: 'image', source: { type: 'base64', media_type: mimeType || 'image/jpeg', data: imageBase64 } },
+            {
+              type: 'image',
+              source: {
+                type: 'base64',
+                media_type: 'image/jpeg',
+                data: imageBase64
+              }
+            },
             { type: 'text', text: 'Extract client contact info as JSON.' }
           ]
         }]
       })
     });
 
+    const responseText = await response.text();
+    console.log('Status:', response.status);
+    console.log('Response:', responseText.substring(0, 500));
+
     if (!response.ok) {
-      const errText = await response.text();
-      console.error('Anthropic API error:', response.status, errText);
-      return { statusCode: 500, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'API error: ' + response.status }) };
+      return {
+        statusCode: 200,
+        headers: { ...CORS, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'API error ' + response.status + ': ' + responseText.substring(0, 200) })
+      };
     }
 
-    const data = await response.json();
-    console.log('Anthropic response:', JSON.stringify(data));
-
-    if (!data.content || !data.content.length) {
-      return { statusCode: 500, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'Empty response from Claude' }) };
-    }
-
+    const data = JSON.parse(responseText);
     const raw = data.content.map(b => b.text || '').join('').replace(/```json|```/g, '').trim();
-    console.log('Raw text:', raw);
-
     const parsed = JSON.parse(raw);
-    return { statusCode: 200, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify(parsed) };
+
+    return {
+      statusCode: 200,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+      body: JSON.stringify(parsed)
+    };
 
   } catch (err) {
-    console.error('Extract error:', err.message);
-    return { statusCode: 500, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify({ error: err.message }) };
+    console.error('Error:', err.message);
+    return {
+      statusCode: 200,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: err.message })
+    };
   }
 };
