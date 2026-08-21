@@ -245,26 +245,43 @@ async function scanPhoto(input){
   const file=input.files[0];if(!file)return;
   const status=document.getElementById("scanStatus");
   status.textContent="📡 Reading...";
-  const reader=new FileReader();
-  reader.onload=async(e)=>{
-    const base64=e.target.result.split(",")[1];
-    const mime=file.type||"image/jpeg";
-    try{
-      const res=await fetch("/.netlify/functions/extract",{
-        method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({imageBase64:base64,mimeType:mime})
-      });
-      const p=await res.json();
-      if(p.error)throw new Error(p.error);
-      if(p.clientName)document.getElementById("clientName").value=p.clientName;
-      if(p.clientPhone)document.getElementById("clientPhone").value=p.clientPhone;
-      if(p.clientEmail)document.getElementById("clientEmail").value=p.clientEmail;
-      if(p.jobAddress)document.getElementById("jobAddress").value=p.jobAddress;
-      if(p.estimateRef)document.getElementById("estimateRef").value=p.estimateRef;
-      status.textContent="✅ Done — review fields";
-    }catch(e){status.textContent="⚠️ Could not read — fill manually";}
-  };
-  reader.readAsDataURL(file);input.value="";
+  try{
+    // Compress image before sending
+    const base64=await compressImage(file,1024,0.7);
+    const mime="image/jpeg";
+    const res=await fetch("/.netlify/functions/extract",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({imageBase64:base64,mimeType:mime})
+    });
+    const p=await res.json();
+    if(p.error)throw new Error(p.error);
+    if(p.clientName)document.getElementById("clientName").value=p.clientName;
+    if(p.clientPhone)document.getElementById("clientPhone").value=p.clientPhone;
+    if(p.clientEmail)document.getElementById("clientEmail").value=p.clientEmail;
+    if(p.jobAddress)document.getElementById("jobAddress").value=p.jobAddress;
+    if(p.estimateRef)document.getElementById("estimateRef").value=p.estimateRef;
+    status.textContent="✅ Done — review fields";
+  }catch(e){status.textContent="⚠️ "+e.message;}
+  input.value="";
+}
+
+function compressImage(file,maxSize,quality){
+  return new Promise((resolve)=>{
+    const reader=new FileReader();
+    reader.onload=(e)=>{
+      const img=new Image();
+      img.onload=()=>{
+        const canvas=document.createElement("canvas");
+        let w=img.width,h=img.height;
+        if(w>maxSize||h>maxSize){if(w>h){h=Math.round(h*maxSize/w);w=maxSize;}else{w=Math.round(w*maxSize/h);h=maxSize;}}
+        canvas.width=w;canvas.height=h;
+        canvas.getContext("2d").drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL("image/jpeg",quality).split(",")[1]);
+      };
+      img.src=e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 function toggleMic(){if(!("webkitSpeechRecognition"in window)&&!("SpeechRecognition"in window)){document.getElementById("micStatus").textContent="Use Chrome for voice";return;}if(isListening){recognition.stop();return;}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;recognition=new SR();recognition.continuous=true;recognition.interimResults=true;recognition.lang="en-US";let finalText="";recognition.onstart=()=>{isListening=true;document.getElementById("micBtn").classList.add("recording");document.getElementById("micIcon").textContent="⏹";document.getElementById("micLabel").textContent="Stop";document.getElementById("micStatus").textContent="Listening...";document.getElementById("micStatus").className="mic-status listening";};recognition.onresult=(e)=>{finalText="";let interim="";for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)finalText+=e.results[i][0].transcript+" ";else interim+=e.results[i][0].transcript;}document.getElementById("micStatus").textContent=finalText+interim;};recognition.onend=()=>{isListening=false;document.getElementById("micBtn").classList.remove("recording");document.getElementById("micIcon").textContent="🎙";document.getElementById("micLabel").textContent="Speak";if(finalText.trim())parseAndAddItems(finalText.trim());else{document.getElementById("micStatus").textContent="Nothing heard";document.getElementById("micStatus").className="mic-status";}};recognition.onerror=(e)=>{isListening=false;document.getElementById("micBtn").classList.remove("recording");document.getElementById("micIcon").textContent="🎙";document.getElementById("micLabel").textContent="Speak";document.getElementById("micStatus").textContent="Error: "+e.error;document.getElementById("micStatus").className="mic-status";};recognition.start();}
